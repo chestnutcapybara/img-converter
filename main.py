@@ -45,8 +45,8 @@ def select_file():
     # Open File Explorer on windows, Finder on macos, and whatever the files app is on linux
     filename = ctk.filedialog.askopenfilename(
         initialdir="/",
-        title="Select a File",
-        filetypes=(("PNG", "*.png"), ("All files", "*.*"))
+        title="Select an Image",
+        filetypes=(("Portable Network Graphics (PNG)", "*.png"), ("All files", "*.*"))
     )
     if filename:
         print(f"Selected: {filename}")
