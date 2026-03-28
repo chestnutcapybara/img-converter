@@ -1,8 +1,7 @@
-from PIL import Image
+from PIL import Image, ImageTk
 import customtkinter as ctk
+import os
 
-
-from PIL import Image
 
 class Convert:
     def convert_image(self, img_1, img_2):
@@ -27,11 +26,36 @@ app = ctk.CTk()
 app.geometry("800x600")
 app.title("Image Converter")
 
+def set_icon():
+    icon_path = "logo.png"
+    if os.path.exists(icon_path):
+        try:
+            img = Image.open(icon_path).convert("RGBA")
+            app.icon_object = ImageTk.PhotoImage(img)
+            app.wm_iconphoto(False, app.icon_object)
+        except Exception as e:
+            print(f"Icon error: {e}")
+    else:
+        print(f"Icon not found: {icon_path}")
+
+app.after(200, set_icon)
+
+
+def select_file():
+    # Open File Explorer on windows, Finder on macos, and whatever the files app is on linux
+    filename = ctk.filedialog.askopenfilename(
+        initialdir="/",
+        title="Select a File",
+        filetypes=(("PNG", "*.png"), ("All files", "*.*"))
+    )
+    if filename:
+        print(f"Selected: {filename}")
 # Stuff
 
-button = ctk.CTkButton(app, text="CTkButton", command=lambda: convert.convert_image("test.png", "test.jpg"))
+button = ctk.CTkButton(app, text="CTkButton", command=lambda: convert.convert_image("test.png", "test.webp"))
 button.pack()
-
+button2 = ctk.CTkButton(app, text = "Open File Explora", command=lambda: select_file())
+button2.pack()
 app.resizable(False, False)
 app.after(0, lambda: app.state("zoomed"))
 app.mainloop()
